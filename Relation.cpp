@@ -58,7 +58,7 @@ int transitive(int matr[20][20],int arr1[20],int arr2[20],int size1,int size2)
 				{
 					for(n=0;n<size2;n++)
 					{
-						if(matr[i][j]==1&&arr1[j]==arr2[m])
+						if(matr[m][n]==1&&arr1[j]==arr2[m])
 						{
 							f=0;
 							for(r=0;r<size1;r++)								//3rd loop
@@ -72,7 +72,7 @@ int transitive(int matr[20][20],int arr1[20],int arr2[20],int size1,int size2)
 								}
 							}
 							if(f==0)
-								n==size2,m==size1,j==size2,i==size1;
+								n=size2,m=size1,j=size2,i=size1;
 						}			
 					}
 				}
@@ -129,9 +129,9 @@ int closurereflexive(int matr[20][20],int arr1[20],int arr2[20],int size1,int si
 				if(arr1[i]==arr1[m]&&arr1[i]==arr2[n]&&matr[m][n]==1)
 					f=1;
 			}
-			if(f==0&&m==size1-1&&n==size2-1)
-				cout<<"("<<arr1[i]<<","<<arr1[j]<<")";
 		}
+		if(f==0)
+			cout<<"("<<arr1[i]<<","<<arr1[i]<<")";
 	}
 	for(j=0;j<size2;j++)
 	{f=0;
@@ -142,11 +142,19 @@ int closurereflexive(int matr[20][20],int arr1[20],int arr2[20],int size1,int si
 				if(arr2[j]==arr1[m]&&arr2[j]==arr2[n]&&matr[m][n]==1)
 					f=1;
 			}
-			if(f==0&&m==size1-1&&n==size2-1)
-				cout<<"("<<arr2[j]<<","<<arr2[j]<<"),";
 		}
-	}		
+		if(f==0)
+		{
+			for(i=0;i<size1;i++)
+			{
+				if(arr2[i]==arr1[j])
+					i=size1;
+				else if(i==size1-1)
+					cout<<"("<<arr2[j]<<","<<arr2[j]<<"),";
+			}
+		}		
 	cout<<"\b}";
+	}
 }
 
 void closuresymmetric(int matr[20][20],int arr1[20],int arr2[20],int size1,int size2)
@@ -168,7 +176,7 @@ void closuresymmetric(int matr[20][20],int arr1[20],int arr2[20],int size1,int s
 							f=1;										//to beak he loop
 					}			
 				} 
-				if(f==0&&m==size1-1&&n==size2-1)
+				if(f==0)
 				{
 					cout<<"("<<arr2[j]<<","<<arr1[i]<<"),";
 				}
@@ -192,7 +200,7 @@ void closuretransitive(int matr[20][20],int arr1[20],int arr2[20],int size1,int 
 				{
 					for(n=0;n<size2;n++)
 					{
-						if(matr[i][j]==1&&arr1[j]==arr2[m])
+						if(matr[m][n]==1&&arr1[j]==arr2[m])
 						{
 							f=0;
 							for(r=0;r<size1;r++)								//3rd loop
@@ -205,7 +213,7 @@ void closuretransitive(int matr[20][20],int arr1[20],int arr2[20],int size1,int 
 									}
 								}
 							}
-							if(f==0&&r==size1-1&&c==size2-1)
+							if(f==0)
  								cout<<"("<<arr1[i]<<","<<arr2[n]<<"),";
 						}			
 					}
@@ -254,6 +262,17 @@ int main()
 		}		
 	}
 	
+	cout<<endl<<"The relation is : {";	
+	for(i=0;i<size1;i++)
+	{
+		for(j=0;j<size2;j++)
+		{
+			if(matr[i][j]==1)
+				cout<<"("<<arr1[i]<<","<<arr2[j]<<"),";
+		}		
+	}	
+	cout<<"\b}"<<endl;
+	
 	f1=reflexive(matr,arr1,arr2,size1,size2);
 	f2=symmetric(matr,arr1,arr2,size1,size2);
 	f3=transitive(matr,arr1,arr2,size1,size2);
@@ -281,7 +300,7 @@ int main()
 	else
 		cout<<"not a equivalence relation"<<endl;
 	if(f1==1&&f3==1&&f4==1)
-		cout<<"The relation is a Partial order relation"<<endl;
+		cout<<"The relation is a Partial order relation"<<endl<<endl;
 	else	
 		cout<<"not a partial order relation"<<endl;
 	cout<<"***********************************************************************************************************"<<endl;			 	
